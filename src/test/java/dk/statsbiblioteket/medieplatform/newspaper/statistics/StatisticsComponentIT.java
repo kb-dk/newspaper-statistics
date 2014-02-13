@@ -12,6 +12,8 @@ import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.TreeIterator
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.eventhandlers.EventRunner;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.eventhandlers.TreeEventHandler;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.filesystem.transforming.TransformingIteratorForFileSystems;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -19,13 +21,13 @@ public class StatisticsComponentIT {
     private final static String TEST_BATCH_ID = "400022028241";
     private File genericPropertyFile;
     private Properties properties;
-
-
+    private Logger log = LoggerFactory.getLogger(getClass());
     @BeforeMethod(alwaysRun = true)
     public void loadGeneralConfiguration() throws Exception {
         String pathToProperties = System.getProperty("integration.test.newspaper.properties");
         properties = new Properties();
 
+        log.info("Loading general config from: " + pathToProperties);
         genericPropertyFile = new File(pathToProperties);
         properties.load(new FileInputStream(genericPropertyFile));
         loadSpecificProperties(genericPropertyFile.getParentFile() + "/newspaper-statistics-config/config.properties");
@@ -52,6 +54,7 @@ public class StatisticsComponentIT {
     }
 
     private void loadSpecificProperties(String path) throws Exception {
+        log.info("Loading specific config from: " + path);
         File specificProperties = new File(path);
         properties.load(new FileInputStream(specificProperties));
         properties.setProperty(StatisticGenerator.STATISTICS_FILE_LOCATION_PROPERTY, "target/statistics/Integration");
@@ -83,6 +86,8 @@ public class StatisticsComponentIT {
 
     private File getBatchFolder(String batch) {
         String pathToTestBatch = System.getProperty("integration.test.newspaper.testdata");
-        return new File(pathToTestBatch, batch + "/B" + TEST_BATCH_ID + "-RT1");
+        String pathToBatch = pathToTestBatch + '/'+ batch + "/B" + TEST_BATCH_ID + "-RT1";
+        log.info("Loading batch from: " + pathToBatch);
+        return new File(pathToBatch);
     }
 }
