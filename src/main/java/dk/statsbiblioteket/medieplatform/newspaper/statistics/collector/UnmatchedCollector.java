@@ -11,6 +11,7 @@ public class UnmatchedCollector extends StatisticCollector {
     /** No output */
     public UnmatchedCollector() {
         doNotWrite();
+        doNotCount();
     }
 
     @Override

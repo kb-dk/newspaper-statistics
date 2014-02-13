@@ -9,6 +9,9 @@ import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.Statisti
  * Uses SinkCollectors as children.
  */
 public class UnmatchedPageCollector extends StatisticCollector {
+    public UnmatchedPageCollector() {
+        doNotWrite();
+    }
     @Override
     public StatisticCollector createChild(String event) {
         return new SinkCollector();
