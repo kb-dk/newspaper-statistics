@@ -74,6 +74,33 @@ public class PageCollectorTest {
         verify(writer).addStatistic("Sektion 1", 1L);
     }
 
+    @Test
+    public void noSectionsTest() throws IOException {
+        PageCollector pageCollectorUT = new PageCollector();
+        pageCollectorUT.initialize("page1", parentCollector, writer, properties);
+        final String modsXmlStructure =
+                "<mods:mods xmlns:mods=\"http://www.loc.gov/mods/v3\">" +
+                        "  <mods:part>" +
+                        "  </mods:part>" +
+                        "</mods:mods>";
+        AttributeParsingEvent event = new AttributeParsingEvent("Page1.mods.xml") {
+            @Override
+            public InputStream getData() throws IOException {
+                return new ByteArrayInputStream(modsXmlStructure.getBytes());
+            }
+            @Override
+            public String getChecksum() throws IOException {
+                throw new RuntimeException("not implemented");
+            }
+        };
+        pageCollectorUT.handleAttribute(event);
+        pageCollectorUT.handleNodeEnd(new NodeEndParsingEvent("page1"));
+        ArgumentCaptor<Statistics> statisticsCaptor = ArgumentCaptor.forClass(Statistics.class);
+        verify(parentCollector).addStatistics(statisticsCaptor.capture());
+        statisticsCaptor.getValue().writeStatistics(writer);
+        verify(writer, times(0)).addStatistic(anyString(), anyLong());
+    }
+
     private AttributeParsingEvent createAltoEvent(String name, double accuracy) {
         final String altoXmlStructure =
                 "<alto xmlns=\"http://www.loc.gov/standards/alto/ns-v2#\">" +

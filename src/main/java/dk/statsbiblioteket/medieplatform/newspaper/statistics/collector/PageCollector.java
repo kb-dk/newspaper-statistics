@@ -59,9 +59,11 @@ public class PageCollector extends StatisticCollector {
 
     private void addSectionStatistics(AttributeParsingEvent event) {
         String section = readSection(event);
-        Statistics sectionStatistics = new Statistics();
-        sectionStatistics.addCount(section, 1L);
-        getStatistics().addSubstatistic(PAGES_IN_SECTIONS_STAT, sectionStatistics);
+        if (section != null && !section.isEmpty()) {
+            Statistics sectionStatistics = new Statistics();
+            sectionStatistics.addCount(section, 1L);
+            getStatistics().addSubstatistic(PAGES_IN_SECTIONS_STAT, sectionStatistics);
+        }
     }
 
     public static String readSection(AttributeParsingEvent event) throws NumberFormatException {
