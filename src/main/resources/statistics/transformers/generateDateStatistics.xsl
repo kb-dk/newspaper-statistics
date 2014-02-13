@@ -7,6 +7,12 @@
     <xsl:apply-templates select="node()|@*"/>
   </xsl:template>
 
+  <xsl:template match="//Batch">
+    <xsl:copy>
+      <xsl:apply-templates select="node()|@*"/>
+    </xsl:copy>
+  </xsl:template>
+
   <xsl:template match="//Film">
     <xsl:copy>
       <xsl:apply-templates select="node()|@*"/>
