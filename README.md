@@ -20,7 +20,7 @@ properties (values given below are dummy-examples):
 
 ## Design
 The statistics generation is implemented as a number of StatisticsCollector subclasses, one type for each batch node type.
- The collectors have to responsibilities.
+ The collectors have two primary responsibilities.
  1. Process node events into determining what the new node type is a creating and returning a associated collector type.
  2. Collecting the actual statistics and writing these to through StatisticWriter. When a node has finished it's collector
   will add is statistics to that of the parent.
