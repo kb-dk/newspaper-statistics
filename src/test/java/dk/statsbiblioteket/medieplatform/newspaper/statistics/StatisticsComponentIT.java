@@ -46,7 +46,7 @@ public class StatisticsComponentIT {
      * generate a lot of flags.
      * @throws Exception
      */
-    @Test(groups = "integrationTest", "regressiontest")
+    @Test(groups = "integrationTest")
     public void testBadBatch() throws Exception {
         processBatch("bad-bad-batch");
     }
