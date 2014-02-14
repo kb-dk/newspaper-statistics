@@ -37,6 +37,9 @@ public class FilmCollector extends StatisticCollector {
         return statistics;
     }
 
+    /**
+     * Adds a custom edition date list to the statistics.
+     */
     @Override
     public StatisticCollector handleNodeEnd(NodeEndParsingEvent event) {
         getStatistics().addSubstatistic(EDITION_DATE_STAT, editionDates);

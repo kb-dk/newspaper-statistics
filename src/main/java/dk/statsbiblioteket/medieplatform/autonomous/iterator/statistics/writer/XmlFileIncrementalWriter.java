@@ -80,7 +80,7 @@ public class XmlFileIncrementalWriter implements StatisticWriter {
         } catch (XMLStreamException e) {
             throw new RuntimeException("Failed to close xml writer.", e);
         }
-        log.info("Finished writting statistics ");
+        log.info("Finished writing statistics ");
     }
 
     private String replaceSpaces(String input) {

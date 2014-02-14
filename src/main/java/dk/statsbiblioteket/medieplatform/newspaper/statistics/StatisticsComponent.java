@@ -1,12 +1,12 @@
 package dk.statsbiblioteket.medieplatform.newspaper.statistics;
 
+import java.util.Properties;
+
 import dk.statsbiblioteket.medieplatform.autonomous.AutonomousComponentUtils;
 import dk.statsbiblioteket.medieplatform.autonomous.CallResult;
 import dk.statsbiblioteket.medieplatform.autonomous.RunnableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Properties;
 
 public class StatisticsComponent {
 

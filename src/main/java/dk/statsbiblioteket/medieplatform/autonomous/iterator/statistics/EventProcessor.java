@@ -22,8 +22,11 @@ public class EventProcessor extends DefaultTreeEventHandler {
 
     @Override
     public void handleNodeBegin(NodeBeginsParsingEvent event) {
-        if (bootstrapping) bootstrapping = false;
-        else collector = collector.handleNodeBegin(event);
+        if (bootstrapping) {
+            bootstrapping = false;
+        } else {
+            collector = collector.handleNodeBegin(event);
+        }
     }
 
     @Override

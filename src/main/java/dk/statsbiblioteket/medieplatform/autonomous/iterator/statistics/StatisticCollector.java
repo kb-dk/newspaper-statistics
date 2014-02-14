@@ -36,8 +36,8 @@ public abstract class StatisticCollector {
     protected StatisticCollector parent;
     private final Statistics statistics;
     private final String myType;
-    private boolean doNotCount = false;
-    private boolean doNotWrite = false;
+    private boolean isCountEnabled = true;
+    private boolean isWriteEnabled = true;
 
     public StatisticCollector() {
         statistics = new Statistics();
@@ -47,15 +47,18 @@ public abstract class StatisticCollector {
 
     /**
      * Injects the relevant dependencies into this collector.
-     * @return The name of these statistics.
      */
     public void initialize(String name, StatisticCollector parentCollector, StatisticWriter writer, Properties properties) {
         this.name = name;
         this.parent = parentCollector;
         this.writer = writer;
         this.properties = properties;
-        if (shouldWrite()) writer.addNode(myType, getSimpleName(name));
-        if (shouldCount() && parentCollector != null) parentCollector.getStatistics().addCount(myType + 's', 1L);
+        if (shouldWrite()) {
+            writer.addNode(myType, getSimpleName(name));
+        }
+        if (shouldCount() && parentCollector != null) {
+            parentCollector.getStatistics().addCount(myType + 's', 1L);
+        }
     }
 
     /**
@@ -74,29 +77,29 @@ public abstract class StatisticCollector {
 
     /**
      * Will cause the collector to signal it should't be counted
-     * @return this, with the doNotCount
+     * @return this, with the isCountEnabled
      */
     public StatisticCollector doNotCount() {
-        doNotCount = true;
+        isCountEnabled = false;
         return this;
     }
 
     public boolean shouldCount() {
-        return !doNotCount;
+        return isCountEnabled;
     }
 
     /**
      * Will cause the collector to not write any statistics. This includes supressing including an output node for
      * itself.
-     * @return this, with the doNotCount
+     * @return this, with the isCountEnabled
      */
     public StatisticCollector doNotWrite() {
-        doNotWrite = true;
+        isWriteEnabled = false;
         return this;
     }
 
     public boolean shouldWrite() {
-        return !doNotWrite;
+        return isWriteEnabled;
     }
 
     /**
@@ -116,8 +119,12 @@ public abstract class StatisticCollector {
     public StatisticCollector handleNodeBegin(NodeBeginsParsingEvent event) {
         String[] nameParts = event.getName().split("/");
         StatisticCollector childCollector = createChild(nameParts[nameParts.length-1]);
-        if (childCollector == null) throw new RuntimeException("Unexpected event: " + event);
-        if (childCollector != this) childCollector.initialize(event.getName(), this, writer, properties);
+        if (childCollector == null) {
+            throw new RuntimeException("Unexpected event: " + event);
+        }
+        if (childCollector != this) {
+            childCollector.initialize(event.getName(), this, writer, properties);
+        }
         return childCollector;
     }
 
@@ -128,9 +135,15 @@ public abstract class StatisticCollector {
      */
     public StatisticCollector handleNodeEnd(NodeEndParsingEvent event) {
         if (event.getName().equals(name)) {
-            if (shouldWrite()) getStatistics().writeStatistics(writer);
-            if (parent != null) parent.addStatistics(getStatistics());
-            if (shouldWrite()) writer.endNode();
+            if (shouldWrite()) {
+                getStatistics().writeStatistics(writer);
+            }
+            if (parent != null) {
+                parent.addStatistics(getStatistics());
+            }
+            if (shouldWrite()) {
+                writer.endNode();
+            }
             return parent;
         } else throw new RuntimeException("Unexpected " + event);
     }
@@ -150,7 +163,7 @@ public abstract class StatisticCollector {
     }
 
     /**
-     * @return The current statistics for this collector.
+     * Adds the supplied statistics to the current statistics for this collector.
      */
     public void addStatistics(Statistics statisticsToAdd) {
         getStatistics().addStatistic(statisticsToAdd);

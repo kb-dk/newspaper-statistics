@@ -35,6 +35,5 @@ public class StatisticsRunnableComponent extends AbstractRunnableComponent {
         EventRunner eventRunner = new EventRunner(createIterator(batch));
         eventRunner.runEvents(statisticGenerator, resultCollector);
         log.info("Done generating statistics '{}', success: {}", batch.getFullID(), resultCollector.isSuccess());
-
     }
 }
