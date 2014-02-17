@@ -13,8 +13,8 @@ symlink to the folder containing the xml files.
 
 In addition to the standard configuration parameters for autonomous components, this component requires the following
 properties (values given below are dummy-examples):
-    # statistics.outputdir: Where to place the generated statistics.
-    # statistics.zeroaccuracy.ignore: Should alto zero values be included in the accuracy mean. Default is that
+ * statistics.outputdir: Where to place the generated statistics.
+ * statistics.zeroaccuracy.ignore: Should alto zero values be included in the accuracy mean. Default is
     false.
 
 
