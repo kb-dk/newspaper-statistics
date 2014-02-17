@@ -34,7 +34,6 @@
           <descriptors>
             <descriptor>src/main/assembly/assembly.xml</descriptor>
           </descriptors>
-          <attach>true</attach>
         </configuration>
         <executions>
           <execution>

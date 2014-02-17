@@ -17,14 +17,12 @@
   </dependencySets>
   <fileSets>
     <fileSet>
-      <filtered>true</filtered>
       <directory>src/main/scripts</directory>
       <outputDirectory>bin</outputDirectory>
       <fileMode>755</fileMode>
       <directoryMode>775</directoryMode>
     </fileSet>
     <fileSet>
-      <filtered>true</filtered>
       <directory>src/main/web</directory>
       <outputDirectory>web</outputDirectory>
       <fileMode>664</fileMode>
