@@ -44,6 +44,25 @@ public class FilmCollectorTest {
         verify(writer, times(0)).addStatistic(PageCollector.PAGES_IN_SECTIONS_STAT, 1L);
     }
 
+    @Test
+    public void noSectionsTest() throws IOException {
+        FilmCollector filmCollectorUT = new FilmCollector();
+        filmCollectorUT.initialize("Film1", parentCollector, writer, properties);
+        filmCollectorUT.handleNodeEnd(new NodeEndParsingEvent("Film1"));
+        verify(writer).addNode("Film", filmCollectorUT.getName());
+        verify(writer).addNode(FilmCollector.EDITION_DATE_STAT, null);
+        verify(writer).addNode("Sections", "0");
+    }
+
+    @Test
+    public void noEditionsTest() throws IOException {
+        FilmCollector filmCollectorUT = new FilmCollector();
+        filmCollectorUT.initialize("Film1", parentCollector, writer, properties);
+        filmCollectorUT.handleNodeEnd(new NodeEndParsingEvent("Film1"));
+        verify(writer).addNode("Film", filmCollectorUT.getName());
+        verify(writer).addStatistic("Editions", 0L);
+    }
+
     private void addPagesInSectionStat(FilmCollector filmCollectorUT, String section) {
         Statistics pagesInSectionStat = new Statistics();
         pagesInSectionStat.addCount(section, 1L);

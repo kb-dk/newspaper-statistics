@@ -59,6 +59,9 @@ public abstract class StatisticCollector {
         if (shouldCount() && parentCollector != null) {
             parentCollector.getStatistics().addCount(myType + 's', 1L);
         }
+        for (String mandatoryCount : mandatoryCounts()) {
+            getStatistics().addCount(mandatoryCount + 's', 0L);
+        }
     }
 
     /**
@@ -110,6 +113,16 @@ public abstract class StatisticCollector {
     }
 
     /**
+     * Enables subclasses to define a list of named metrics which should be initialized to a 0 count. This
+     * means that even if no nodes are found of this type a 0 count statistics will be included.
+     *
+     * The default is that no mandatory count metrics are defined.
+     */
+    protected String[] mandatoryCounts(){
+        return new String[0];
+    }
+
+    /**
      * Must be implemented by the concrete subclasses defining the actual statistics collection and
      * which collector to return to handle the new node.
      * @param event The event defining the new node.
@@ -134,7 +147,7 @@ public abstract class StatisticCollector {
      * @return The parent collector
      */
     public StatisticCollector handleNodeEnd(NodeEndParsingEvent event) {
-        if (event.getName().equals(name)) {
+            if (event.getName().equals(name)) {
             if (shouldWrite()) {
                 getStatistics().writeStatistics(writer);
             }

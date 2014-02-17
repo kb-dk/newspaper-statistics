@@ -14,4 +14,9 @@ public class EditionCollector extends StatisticCollector {
                 return new PageCollector();
             }
     }
+
+    @Override
+    protected String[] mandatoryCounts() {
+        return new String[] {"Brik", "Page"};
+    }
 }

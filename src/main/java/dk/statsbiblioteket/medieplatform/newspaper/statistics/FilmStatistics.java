@@ -9,12 +9,13 @@ import dk.statsbiblioteket.medieplatform.newspaper.statistics.collector.PageColl
  * FilmCollector.SECTIONS_STAT, eg. the numberOfPages are ignored and each section is only counted once.
  */
 public class FilmStatistics extends Statistics {
+    public FilmStatistics() {
+        substatisticsMap.put(FilmCollector.SECTIONS_STAT, new SectionStatistics());
+    }
+
     @Override
     public void addSubstatistic(String name, Statistics statisticsToAdd) {
         if (name.equals(PageCollector.PAGES_IN_SECTIONS_STAT)) {
-            if (!substatisticsMap.containsKey(FilmCollector.SECTIONS_STAT)) {
-                substatisticsMap.put(FilmCollector.SECTIONS_STAT, new SectionStatistics());
-            }
             super.addSubstatistic(FilmCollector.SECTIONS_STAT, statisticsToAdd);
         } else {
             super.addSubstatistic(name, statisticsToAdd);

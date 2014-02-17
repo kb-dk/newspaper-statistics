@@ -18,4 +18,9 @@ public class UnmatchedCollector extends StatisticCollector {
     public StatisticCollector createChild(String event) {
         return new UnmatchedPageCollector();
     }
+
+    @Override
+    protected String[] mandatoryCounts() {
+        return new String[] {"UnmatchedPage"};
+    }
 }

@@ -45,4 +45,9 @@ public class FilmCollector extends StatisticCollector {
         getStatistics().addSubstatistic(EDITION_DATE_STAT, editionDates);
         return super.handleNodeEnd(event);
     }
+
+    @Override
+    protected String[] mandatoryCounts() {
+        return new String[] {"Edition"};
+    }
 }

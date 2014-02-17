@@ -13,4 +13,9 @@ public class BatchCollector extends StatisticCollector {
         if (eventName.equals("WORKSHIFT-ISO-TARGET")) return new SinkCollector();
         else return new FilmCollector();
     }
+
+    @Override
+    protected String[] mandatoryCounts() {
+        return new String[] {"Film"};
+    }
 }
