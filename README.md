@@ -3,6 +3,11 @@ newspaper-statistics
 
 Provides functionality for generating statistics for a batch as xml, and accessing these through a web frontend.
 
+The statistics contains two parts:
+1. Autonomous component: Will generate XXXX-statistics.xml files to the configured dir. These are loaded from the web
+frontend.
+2. Web frontend based on html with java script.
+
 ## Installation
 When the tar.gz is unpacked a web folder will appear. This contains a statistics folder, which contains the statistics
 frontend files. The statistics.html file contain the GUI. the statistics xml files must be place in a data dir in the
@@ -16,7 +21,6 @@ properties (values given below are dummy-examples):
  * statistics.outputdir: Where to place the generated statistics.
  * statistics.zeroaccuracy.ignore: Should alto zero values be included in the accuracy mean. Default is
     false.
-
 
 ## Design
 The statistics generation is implemented as a number of StatisticsCollector subclasses, one type for each batch node type.
