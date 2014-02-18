@@ -161,12 +161,10 @@
             //span to show node name
             var tagName = $('<span>', {text: tagName}).addClass('tree_node');
 
-            //if no children, simply append text (if any), otherwise iteratively call self on children
-            if (!kids.length) {
-                LITxtHolder.prepend(node.text()).prepend(tagName);
-            } else {
+
+            LITxtHolder.prepend(node.immediateText()+(attrs.length!=0 ? attrs[0].value : '')).prepend(tagName);
+            if (kids.length) {
                 this.delve_nextAppendTo = ul;
-                LITxtHolder.prepend(node.immediateText()+(attrs.length!=0 ? attrs[0].value : '')).prepend(tagName);
                 kids.each(function() { thiss.delve($(this)); });
                 this.delve_nextAppendTo = this.delve_nextAppendTo.parent().parent();
             }
