@@ -23,6 +23,12 @@
       <directoryMode>775</directoryMode>
     </fileSet>
     <fileSet>
+      <directory>src/main/config</directory>
+      <outputDirectory>config</outputDirectory>
+      <fileMode>664</fileMode>
+      <directoryMode>775</directoryMode>
+    </fileSet>
+    <fileSet>
       <directory>src/main/web</directory>
       <outputDirectory>web</outputDirectory>
       <fileMode>664</fileMode>

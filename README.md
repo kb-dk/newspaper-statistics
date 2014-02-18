@@ -1,4 +1,4 @@
-newspaper-statistics
+Newspaper-statistics
 ==========================
 
 Provides functionality for generating statistics for a batch as xml, and accessing these through a web frontend.
