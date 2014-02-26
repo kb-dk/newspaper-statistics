@@ -1,11 +1,5 @@
 package dk.statsbiblioteket.medieplatform.newspaper.statistics;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Properties;
-
 import dk.statsbiblioteket.medieplatform.autonomous.Batch;
 import dk.statsbiblioteket.medieplatform.autonomous.ResultCollector;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.TreeIterator;
@@ -17,12 +11,18 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Properties;
+
 public class StatisticsComponentIT {
     private final static String TEST_BATCH_ID = "400022028241";
     private File genericPropertyFile;
     private Properties properties;
     private Logger log = LoggerFactory.getLogger(getClass());
-    @BeforeMethod(alwaysRun = true)
+    @BeforeMethod(groups = "testDataTest")
     public void loadGeneralConfiguration() throws Exception {
         String pathToProperties = System.getProperty("integration.test.newspaper.properties");
         properties = new Properties();
@@ -38,7 +38,7 @@ public class StatisticsComponentIT {
      * errors or flags when the batch and configuration agree on the setup..
      * @throws Exception
      */
-    @Test(groups = "integrationTest")
+    @Test(groups = "testDataTest")
     public void testSmallBatch() throws Exception {
         processBatch("small-test-batch");
     }
@@ -48,7 +48,7 @@ public class StatisticsComponentIT {
      * generate a lot of flags.
      * @throws Exception
      */
-    @Test(groups = "integrationTest")
+    @Test(groups = "testDataTest")
     public void testBadBatch() throws Exception {
         processBatch("bad-bad-batch");
     }

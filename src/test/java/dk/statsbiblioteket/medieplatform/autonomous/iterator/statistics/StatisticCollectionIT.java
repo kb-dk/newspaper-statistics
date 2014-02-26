@@ -16,7 +16,7 @@ public class StatisticCollectionIT extends XmlFileTest {
     private StatisticGenerator eventProcessor;
     private Batch batch;
 
-    @BeforeMethod(groups = "integrationTest")
+    @BeforeMethod(groups = "standAloneTest")
     public void setupMethod(Method method) {
         batch = new Batch();
         batch.setBatchID("4099");
@@ -24,7 +24,7 @@ public class StatisticCollectionIT extends XmlFileTest {
         setOutputFileLocation(eventProcessor.getStatisticsFile());
     }
 
-    @Test(groups = "integrationTest")
+    @Test(groups = "standAloneTest")
     public void emptyBatchOutputTest() {
 
         eventProcessor.handleNodeBegin(new NodeBeginsParsingEvent(batch.getFullID()));
@@ -33,7 +33,7 @@ public class StatisticCollectionIT extends XmlFileTest {
         assertOutputEqual("<Statistics><Batch name=\"" + batch.getFullID() + "\"><Films>0</Films></Batch></Statistics>\n");
     }
 
-    @Test(groups = "integrationTest")
+    @Test(groups = "standAloneTest")
     public void pageNodeCountTest() {
         eventProcessor.handleNodeBegin(new NodeBeginsParsingEvent(batch.getFullID()));
         String film1 = "film1";
