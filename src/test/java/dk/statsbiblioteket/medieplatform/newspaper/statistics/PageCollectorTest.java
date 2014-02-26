@@ -1,11 +1,5 @@
 package dk.statsbiblioteket.medieplatform.newspaper.statistics;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.util.Properties;
-
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.AttributeParsingEvent;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.NodeEndParsingEvent;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.StatisticCollector;
@@ -18,7 +12,18 @@ import org.mockito.ArgumentCaptor;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.mockito.Mockito.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.util.Properties;
+
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class PageCollectorTest {
     private StatisticCollector parentCollector;
@@ -65,14 +70,16 @@ public class PageCollectorTest {
     @Test
     public void pagesInSectionsTest() throws IOException {
         PageCollector pageCollectorUT = new PageCollector();
+        String name = "1. Sektion";
         pageCollectorUT.initialize("page1", parentCollector, writer, properties);
 
-        pageCollectorUT.handleAttribute(createModsSectionEvent("Page1.mods.xml", "Sektion 1"));
+        pageCollectorUT.handleAttribute(createModsSectionEvent("Page1.mods.xml", name));
         pageCollectorUT.handleNodeEnd(new NodeEndParsingEvent("page1"));
         ArgumentCaptor<Statistics> statisticsCaptor = ArgumentCaptor.forClass(Statistics.class);
         verify(parentCollector).addStatistics(statisticsCaptor.capture());
         statisticsCaptor.getValue().writeStatistics(writer);
-        verify(writer).addStatistic(new StatisticsKey("Section", "1. Sektion"), 1L);
+
+        verify(writer).addStatistic(new StatisticsKey("Section", name),1L);
     }
 
     @Test
