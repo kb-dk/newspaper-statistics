@@ -165,7 +165,7 @@
             }
             if (attrs.getNamedItem("summary")) {
                 text = attrs.getNamedItem("summary").value;
-            } else if (node.immediateText()) {
+            } else if (!kids.length) {
                 text = node.immediateText();
             } else if (attrs.getNamedItem("name")) {
                 text = attrs.getNamedItem("name").value;
