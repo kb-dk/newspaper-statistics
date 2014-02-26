@@ -1,13 +1,13 @@
 package dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer;
 
+import org.apache.commons.io.FileUtils;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.testng.annotations.BeforeClass;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
-import org.apache.commons.io.FileUtils;
-import org.custommonkey.xmlunit.XMLUnit;
-import org.testng.annotations.BeforeClass;
 
 import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 
@@ -26,6 +26,7 @@ public class XmlFileTest {
     protected void assertOutputEqual(String expectedXmlBody) {
         String expectedDoc = "<?xml version=\"1.0\" ?>" + expectedXmlBody;
         try {
+            XMLUnit.setIgnoreWhitespace(true);
             assertXMLEqual(expectedDoc, readOutput());
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -43,8 +44,12 @@ public class XmlFileTest {
         return sb.toString();
     }
 
+    public void setOutputFileLocation(String outputFileLocation) {
+        this.outputFileLocation = outputFileLocation;
+    }
+
     protected XmlFileIncrementalWriter createWriter(String name) {
-        outputFileLocation = OUTPUTFILE_DIR + name + ".xml";
+        setOutputFileLocation(OUTPUTFILE_DIR + name + ".xml");
         return new XmlFileIncrementalWriter(outputFileLocation);
     }
 }

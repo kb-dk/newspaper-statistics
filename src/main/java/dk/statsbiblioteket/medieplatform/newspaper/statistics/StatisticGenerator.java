@@ -1,13 +1,5 @@
 package dk.statsbiblioteket.medieplatform.newspaper.statistics;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.Properties;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-
 import dk.statsbiblioteket.medieplatform.autonomous.Batch;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.EventProcessor;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer.StatisticWriter;
@@ -15,6 +7,14 @@ import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer.X
 import dk.statsbiblioteket.medieplatform.newspaper.statistics.collector.BatchCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.Properties;
 
 /**
  * Processes ParsingEvents for a into a xml file containing the statistics for the batch. After the full statistics
@@ -75,5 +75,9 @@ public class StatisticGenerator extends EventProcessor {
         xmlTransformer.transform(
                 new StreamSource(new FileInputStream(statisticsFile)), new StreamResult(new FileOutputStream(outputfil))
         );
+    }
+
+    public String getStatisticsFile() {
+        return statisticsFile;
     }
 }
