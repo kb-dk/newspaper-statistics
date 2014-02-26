@@ -1,8 +1,5 @@
 package dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics;
 
-import java.lang.reflect.Method;
-import java.util.Properties;
-
 import dk.statsbiblioteket.medieplatform.autonomous.Batch;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.NodeBeginsParsingEvent;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.NodeEndParsingEvent;
@@ -11,19 +8,22 @@ import dk.statsbiblioteket.medieplatform.newspaper.statistics.StatisticGenerator
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.lang.reflect.Method;
+import java.util.Properties;
+
 public class StatisticCollectionIT extends XmlFileTest {
     /** Instance of the EventProcessor Under Test. */
     private EventProcessor eventProcessor;
     private static final String DEFAULT_BATCH = "4099";
 
-    @BeforeMethod
+    @BeforeMethod(groups = "integrationTest")
     public void setupMethod(Method method) {
         Batch batch = new Batch();
         batch.setBatchID(DEFAULT_BATCH);
         eventProcessor = new StatisticGenerator(batch, new Properties());
     }
 
-    @Test
+    @Test(groups = "integrationTest")
     public void emptyBatchOutputTest() {
         eventProcessor.handleNodeBegin(new NodeBeginsParsingEvent(DEFAULT_BATCH));
         eventProcessor.handleNodeEnd(new NodeEndParsingEvent(DEFAULT_BATCH));
@@ -34,7 +34,7 @@ public class StatisticCollectionIT extends XmlFileTest {
                 "</Statistics>");
     }
 
-    @Test
+    @Test(groups = "integrationTest")
     public void pageNodeCountTest() {
         eventProcessor.handleNodeBegin(new NodeBeginsParsingEvent(DEFAULT_BATCH));
         String FILM1= DEFAULT_BATCH + "/film1";
