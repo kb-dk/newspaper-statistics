@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.NodeEndParsingEvent;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.StatisticCollector;
+import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.StatisticsKey;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer.StatisticWriter;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.Statistics;
 import dk.statsbiblioteket.medieplatform.newspaper.statistics.collector.FilmCollector;
@@ -39,9 +40,9 @@ public class FilmCollectorTest {
         filmCollectorUT.handleNodeEnd(new NodeEndParsingEvent("Film1"));
         verify(writer).addNode("Film", filmCollectorUT.getName());
         verify(writer).addNode(FilmCollector.SECTIONS_STAT, "2");
-        verify(writer).addStatistic("Sektion 1", 2L);
-        verify(writer).addStatistic("Sektion 2", 1L);
-        verify(writer, times(0)).addStatistic(PageCollector.PAGES_IN_SECTIONS_STAT, 1L);
+        verify(writer).addStatistic(new StatisticsKey("Section", "1. sektion"), 2L);
+        verify(writer).addStatistic(new StatisticsKey("Section", "Sektion 2"), 1L);
+        verify(writer, times(0)).addStatistic(new StatisticsKey(PageCollector.PAGES_IN_SECTIONS_STAT), 1L);
     }
 
     @Test
@@ -50,7 +51,7 @@ public class FilmCollectorTest {
         filmCollectorUT.initialize("Film1", parentCollector, writer, properties);
         filmCollectorUT.handleNodeEnd(new NodeEndParsingEvent("Film1"));
         verify(writer).addNode("Film", filmCollectorUT.getName());
-        verify(writer).addNode(FilmCollector.EDITION_DATE_STAT, null);
+        verify(writer).addNode(FilmCollector.EDITION_DATE_STAT, (String)null);
         verify(writer).addNode("Sections", "0");
     }
 
@@ -60,14 +61,14 @@ public class FilmCollectorTest {
         filmCollectorUT.initialize("Film1", parentCollector, writer, properties);
         filmCollectorUT.handleNodeEnd(new NodeEndParsingEvent("Film1"));
         verify(writer).addNode("Film", filmCollectorUT.getName());
-        verify(writer).addStatistic("Editions", 0L);
+        verify(writer).addStatistic(new StatisticsKey("Editions"), 0L);
     }
 
     private void addPagesInSectionStat(FilmCollector filmCollectorUT, String section) {
         Statistics pagesInSectionStat = new Statistics();
-        pagesInSectionStat.addCount(section, 1L);
+        pagesInSectionStat.addCount(new StatisticsKey("Section", section), 1L);
         Statistics pageStatistics = new Statistics();
-        pageStatistics.addSubstatistic(PageCollector.PAGES_IN_SECTIONS_STAT, pagesInSectionStat);
+        pageStatistics.addSubstatistic(new StatisticsKey(PageCollector.PAGES_IN_SECTIONS_STAT), pagesInSectionStat);
         filmCollectorUT.addStatistics(pageStatistics);
     }
 }

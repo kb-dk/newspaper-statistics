@@ -10,6 +10,7 @@ import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.AttributePar
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.NodeEndParsingEvent;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.StatisticCollector;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.Statistics;
+import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.StatisticsKey;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.WeightedMean;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer.StatisticWriter;
 import dk.statsbiblioteket.medieplatform.newspaper.statistics.collector.PageCollector;
@@ -43,7 +44,7 @@ public class PageCollectorTest {
         ArgumentCaptor<Statistics> statisticsCaptor = ArgumentCaptor.forClass(Statistics.class);
         verify(parentCollector).addStatistics(statisticsCaptor.capture());
         statisticsCaptor.getValue().writeStatistics(writer);
-        verify(writer).addStatistic(PageCollector.OCR_ACCURACY_STAT, new WeightedMean(0.0,1));
+        verify(writer).addStatistic(new StatisticsKey(PageCollector.OCR_ACCURACY_STAT), new WeightedMean(0.0,1));
     }
 
     @Test
@@ -58,7 +59,7 @@ public class PageCollectorTest {
         ArgumentCaptor<Statistics> statisticsCaptor = ArgumentCaptor.forClass(Statistics.class);
         verify(parentCollector).addStatistics(statisticsCaptor.capture());
         statisticsCaptor.getValue().writeStatistics(writer);
-        verify(writer, times(0)).addStatistic(PageCollector.OCR_ACCURACY_STAT, new WeightedMean(0.0,1));
+        verify(writer, times(0)).addStatistic(new StatisticsKey(PageCollector.OCR_ACCURACY_STAT), new WeightedMean(0.0,1));
     }
 
     @Test
@@ -71,7 +72,7 @@ public class PageCollectorTest {
         ArgumentCaptor<Statistics> statisticsCaptor = ArgumentCaptor.forClass(Statistics.class);
         verify(parentCollector).addStatistics(statisticsCaptor.capture());
         statisticsCaptor.getValue().writeStatistics(writer);
-        verify(writer).addStatistic("Sektion 1", 1L);
+        verify(writer).addStatistic(new StatisticsKey("Section", "1. Sektion"), 1L);
     }
 
     @Test
@@ -98,7 +99,7 @@ public class PageCollectorTest {
         ArgumentCaptor<Statistics> statisticsCaptor = ArgumentCaptor.forClass(Statistics.class);
         verify(parentCollector).addStatistics(statisticsCaptor.capture());
         statisticsCaptor.getValue().writeStatistics(writer);
-        verify(writer, times(0)).addStatistic(anyString(), anyLong());
+        verify(writer, times(0)).addStatistic(new StatisticsKey(anyString()), anyLong());
     }
 
     private AttributeParsingEvent createAltoEvent(String name, double accuracy) {

@@ -2,6 +2,7 @@ package dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer;
 
 import java.lang.reflect.Method;
 
+import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.StatisticsKey;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -31,7 +32,7 @@ public class XmlFileIncrementalWriterTest extends XmlFileTest {
     @Test
     public void testStatisticElement() throws Exception {
         writerUT.addNode("Batch", "4209");
-        writerUT.addStatistic("NumberOfPages", 21354);
+        writerUT.addStatistic(new StatisticsKey("NumberOfPages"), 21354);
         writerUT.endNode();
         writerUT.finish();
         assertOutputEqual(

@@ -4,6 +4,7 @@ import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.NodeEndParsi
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.SinkCollector;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.StatisticCollector;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.Statistics;
+import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.StatisticsKey;
 import dk.statsbiblioteket.medieplatform.newspaper.statistics.FilmStatistics;
 
 /**
@@ -22,7 +23,9 @@ public class FilmCollector extends StatisticCollector {
         } else if (eventName.equals("FILM-ISO-target")) {
             return new SinkCollector();
         } else {
-            editionDates.addCount("E" + getSimpleName(eventName).substring(0, eventName.lastIndexOf('-')), 1L);
+            editionDates.addCount(new StatisticsKey("Date",
+                    getSimpleName(eventName).substring(0, eventName.lastIndexOf('-'))),
+                    1L);
             return new EditionCollector();
         }
     }
@@ -42,7 +45,7 @@ public class FilmCollector extends StatisticCollector {
      */
     @Override
     public StatisticCollector handleNodeEnd(NodeEndParsingEvent event) {
-        getStatistics().addSubstatistic(EDITION_DATE_STAT, editionDates);
+        getStatistics().addSubstatistic(new StatisticsKey(EDITION_DATE_STAT), editionDates);
         return super.handleNodeEnd(event);
     }
 

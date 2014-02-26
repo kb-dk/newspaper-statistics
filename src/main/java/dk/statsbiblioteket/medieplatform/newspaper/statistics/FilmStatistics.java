@@ -1,6 +1,7 @@
 package dk.statsbiblioteket.medieplatform.newspaper.statistics;
 
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.Statistics;
+import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.StatisticsKey;
 import dk.statsbiblioteket.medieplatform.newspaper.statistics.collector.FilmCollector;
 import dk.statsbiblioteket.medieplatform.newspaper.statistics.collector.PageCollector;
 
@@ -10,15 +11,16 @@ import dk.statsbiblioteket.medieplatform.newspaper.statistics.collector.PageColl
  */
 public class FilmStatistics extends Statistics {
     public FilmStatistics() {
-        substatisticsMap.put(FilmCollector.SECTIONS_STAT, new SectionStatistics());
+        super();
+        substatisticsMap.put(new StatisticsKey(FilmCollector.SECTIONS_STAT), new SectionStatistics());
     }
 
     @Override
-    public void addSubstatistic(String name, Statistics statisticsToAdd) {
-        if (name.equals(PageCollector.PAGES_IN_SECTIONS_STAT)) {
-            super.addSubstatistic(FilmCollector.SECTIONS_STAT, statisticsToAdd);
+    public void addSubstatistic(StatisticsKey key, Statistics statisticsToAdd) {
+        if (key.getType().equals(PageCollector.PAGES_IN_SECTIONS_STAT)) {
+            super.addSubstatistic(new StatisticsKey(FilmCollector.SECTIONS_STAT), statisticsToAdd);
         } else {
-            super.addSubstatistic(name, statisticsToAdd);
+            super.addSubstatistic(key, statisticsToAdd);
         }
     }
 
@@ -26,9 +28,10 @@ public class FilmStatistics extends Statistics {
      * Overrides the addCount so the count number is ignore, and the count is just increment by 1.
      */
     private static class CountNormalizerStatistics extends Statistics  {
+
         @Override
-        public void addCount(String name, Long countToAdd) {
-            super.addCount(name, 1L);
+        public void addCount(StatisticsKey key, Long countToAdd) {
+            super.addCount(key, 1L);
         }
     }
 

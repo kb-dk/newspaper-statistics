@@ -114,7 +114,7 @@
         XMLTree.prototype.delve = function(node) {
 
             //what's this node's tag name?
-            var tagName = node[0].tagName.replace(new RegExp('_'+rand+'$', 'i'), '').toLowerCase();
+            var tagName = node[0].tagName.replace(new RegExp('_'+rand+'$', 'i'), '');
 
             //build LI and sub-UL for this node (note, tagname is applied as class to LI, for easy post-tree traversal)
             (this.delve_nextAppendTo ? this.delve_nextAppendTo : this.tree).append((li = $('<li>').addClass(tagName).append(LITxtHolder = $('<span>').addClass('LIText')).append(ul = $('<ul>'))));
@@ -158,11 +158,24 @@
             var kids = node.children();
             if (!kids.length && (!attrs.length || (attrs.length && jdo.attrs && jdo.attrs == 'hidden'))) li.addClass('noKids');
 
+            var nodeName = tagName;
+            var text;
+            if (!kids.length && attrs.getNamedItem("name")) {
+                nodeName = attrs.getNamedItem("name").value;
+            }
+            if (attrs.getNamedItem("summary")) {
+                text = attrs.getNamedItem("summary").value;
+            } else if (node.immediateText()) {
+                text = node.immediateText();
+            } else if (attrs.getNamedItem("name")) {
+                text = attrs.getNamedItem("name").value;
+            } else {
+                text = '';
+            }
+
             //span to show node name
-            var tagName = $('<span>', {text: tagName}).addClass('tree_node');
-
-
-            LITxtHolder.prepend(node.immediateText()+(attrs.length!=0 ? attrs[0].value : '')).prepend(tagName);
+            var tagName = $('<span>', {text: nodeName}).addClass('tree_node');
+            LITxtHolder.prepend(text).prepend(tagName);
             if (kids.length) {
                 this.delve_nextAppendTo = ul;
                 kids.each(function() { thiss.delve($(this)); });

@@ -7,6 +7,7 @@ import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.AttributePar
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.SinkCollector;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.StatisticCollector;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.Statistics;
+import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.StatisticsKey;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.WeightedMean;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer.StatisticWriter;
 import dk.statsbiblioteket.util.xml.DOM;
@@ -53,7 +54,7 @@ public class PageCollector extends StatisticCollector {
     private void addAltoWordAccuracyStatistics(AttributeParsingEvent event) {
         Double accuracy = readAccuracy(event);
         if (!ignoreZeroAccuracy || accuracy > 0) {
-            getStatistics().addRelative( OCR_ACCURACY_STAT, new WeightedMean(accuracy, 1));
+            getStatistics().addRelative( new StatisticsKey(OCR_ACCURACY_STAT), new WeightedMean(accuracy, 1));
         }
     }
 
@@ -61,8 +62,8 @@ public class PageCollector extends StatisticCollector {
         String section = readSection(event);
         if (section != null && !section.isEmpty()) {
             Statistics sectionStatistics = new Statistics();
-            sectionStatistics.addCount(section, 1L);
-            getStatistics().addSubstatistic(PAGES_IN_SECTIONS_STAT, sectionStatistics);
+            sectionStatistics.addCount(new StatisticsKey("Section", section), 1L);
+            getStatistics().addSubstatistic(new StatisticsKey(PAGES_IN_SECTIONS_STAT), sectionStatistics);
         }
     }
 

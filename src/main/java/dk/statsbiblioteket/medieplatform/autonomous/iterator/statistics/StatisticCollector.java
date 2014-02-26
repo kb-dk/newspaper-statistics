@@ -6,6 +6,7 @@ import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.AttributePar
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.NodeBeginsParsingEvent;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.NodeEndParsingEvent;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.Statistics;
+import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.StatisticsKey;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer.StatisticWriter;
 
 /**
@@ -57,10 +58,10 @@ public abstract class StatisticCollector {
             writer.addNode(myType, getSimpleName(name));
         }
         if (shouldCount() && parentCollector != null) {
-            parentCollector.getStatistics().addCount(myType + 's', 1L);
+            parentCollector.getStatistics().addCount(new StatisticsKey(myType + 's'), 1L);
         }
         for (String mandatoryCount : mandatoryCounts()) {
-            getStatistics().addCount(mandatoryCount + 's', 0L);
+            getStatistics().addCount(new StatisticsKey(mandatoryCount + 's'), 0L);
         }
     }
 

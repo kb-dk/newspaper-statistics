@@ -1,5 +1,7 @@
 package dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer;
 
+import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.StatisticsKey;
+
 /**
  * Defines the statistics write operations which can be performed.
  */
@@ -21,7 +23,7 @@ public interface StatisticWriter {
      * @param name The name of the measurement.
      * @param metric The N measurement.
      */
-    void addStatistic(String name, Number metric);
+    void addStatistic(StatisticsKey name, Number metric);
 
     void finish();
 }

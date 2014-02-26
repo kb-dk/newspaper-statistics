@@ -8,11 +8,11 @@ import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.Statisti
 public class EditionCollector extends StatisticCollector {
     @Override
     public StatisticCollector createChild(String event) {
-            if (event.endsWith("brik")) {
-                return new BrikCollector();
-            } else {
-                return new PageCollector();
-            }
+        if (event.endsWith("brik")) {
+            return new BrikCollector();
+        } else {
+            return new PageCollector();
+        }
     }
 
     @Override

@@ -8,6 +8,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.StatisticsKey;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,9 +62,12 @@ public class XmlFileIncrementalWriter implements StatisticWriter {
      * <pages>1</pages>.
      */
     @Override
-    public void addStatistic(String name, Number metric) {
+    public void addStatistic(StatisticsKey key, Number metric) {
         try {
-            out.writeStartElement(replaceSpaces(name));
+            out.writeStartElement(key.getType());
+            if (key.isNameDefined()) {
+                out.writeAttribute("name", key.getName());
+            }
             out.writeCharacters(metric.toString());
             out.writeEndElement();
         } catch (XMLStreamException e) {
