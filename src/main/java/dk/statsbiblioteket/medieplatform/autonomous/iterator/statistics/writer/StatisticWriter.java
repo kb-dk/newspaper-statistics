@@ -14,6 +14,14 @@ public interface StatisticWriter {
     void addNode(String type, String name);
 
     /**
+     * Adds a node element.
+     * @param type The type of element.
+     * @param name The name attribute. May be null, in which case no name is included.
+     * @param summary A optional summary to include as attribute on the node.
+     */
+    void addNode(String type, String name, String summary);
+
+    /**
      * Finishes the current node.
      */
     void endNode();

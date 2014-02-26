@@ -39,9 +39,14 @@ public class XmlFileIncrementalWriter implements StatisticWriter {
 
     @Override
     public void addNode(String type, String name) {
+        addNode(type, name, null);
+    }
+    @Override
+    public void addNode(String type, String name, String summary) {
         try {
             out.writeStartElement(replaceSpaces(type));
             if (name != null) out.writeAttribute("name", name);
+            if (summary != null) out.writeAttribute("summary", summary);
         } catch (XMLStreamException e) {
             throw new RuntimeException("Failed to add node: " + name, e);
         }

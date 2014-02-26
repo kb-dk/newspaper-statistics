@@ -97,7 +97,7 @@ public class Statistics {
         }
 
         for (Map.Entry<StatisticsKey, Statistics> measurement : substatisticsMap.entrySet()) {
-            writer.addNode(measurement.getKey().getType(), measurement.getValue().getSummary());
+            writer.addNode(measurement.getKey().getType(), null, measurement.getValue().getSummary());
             measurement.getValue().writeStatistics(writer);
             writer.endNode();
         }
