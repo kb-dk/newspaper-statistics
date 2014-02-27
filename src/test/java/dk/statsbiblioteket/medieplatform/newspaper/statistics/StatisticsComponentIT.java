@@ -1,5 +1,11 @@
 package dk.statsbiblioteket.medieplatform.newspaper.statistics;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Properties;
+
 import dk.statsbiblioteket.medieplatform.autonomous.Batch;
 import dk.statsbiblioteket.medieplatform.autonomous.ResultCollector;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.TreeIterator;
@@ -10,12 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Properties;
 
 public class StatisticsComponentIT {
     private final static String TEST_BATCH_ID = "400022028241";
@@ -80,7 +80,6 @@ public class StatisticsComponentIT {
      */
     public TreeIterator getIterator(String batchFolder) throws URISyntaxException {
         File file = getBatchFolder(batchFolder);
-        System.out.println(file);
         return new TransformingIteratorForFileSystems(file, "\\.", ".*\\.jp2$", ".md5");
     }
 

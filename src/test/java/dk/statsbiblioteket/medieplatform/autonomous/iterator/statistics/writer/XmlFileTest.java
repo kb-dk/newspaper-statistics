@@ -1,19 +1,19 @@
 package dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer;
 
-import org.apache.commons.io.FileUtils;
-import org.custommonkey.xmlunit.XMLUnit;
-import org.testng.annotations.BeforeClass;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.testng.annotations.BeforeClass;
+
 import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 
 public class XmlFileTest {
-    private final String OUTPUTFILE_DIR = "target/statistics/" + getClass().getSimpleName() + "/";
-    private String outputFileLocation;
+    protected final String OUTPUTFILE_DIR = "target/statistics/" + getClass().getSimpleName() + "/";
+    protected String outputFileLocation;
 
     @BeforeClass
     public void initialize() throws IOException {
@@ -44,12 +44,8 @@ public class XmlFileTest {
         return sb.toString();
     }
 
-    public void setOutputFileLocation(String outputFileLocation) {
-        this.outputFileLocation = outputFileLocation;
-    }
-
     protected XmlFileIncrementalWriter createWriter(String name) {
-        setOutputFileLocation(OUTPUTFILE_DIR + name + ".xml");
+        outputFileLocation = OUTPUTFILE_DIR + name + ".xml";
         return new XmlFileIncrementalWriter(outputFileLocation);
     }
 }

@@ -20,6 +20,7 @@ import org.w3c.dom.Document;
  * Uses SinkCollectors as children.
  */
 public class PageCollector extends StatisticCollector {
+    public static final String SECTION_STAT_KEY = "Section";
     public static final String PAGES_IN_SECTIONS_STAT = "Pages-In-Sections";
     public static final String OCR_ACCURACY_STAT = "OCR-Accuracy";
     public static final String ALTO_IGNORE_ZERO_ACCURACY_PROPERTY = "statistics.zeroaccuracy.ignore";
@@ -62,7 +63,7 @@ public class PageCollector extends StatisticCollector {
         String section = readSection(event);
         if (section != null && !section.isEmpty()) {
             Statistics sectionStatistics = new Statistics();
-            sectionStatistics.addCount(new StatisticsKey("Section", section), 1L);
+            sectionStatistics.addCount(new StatisticsKey(SECTION_STAT_KEY, section), 1L);
             getStatistics().addSubstatistic(new StatisticsKey(PAGES_IN_SECTIONS_STAT), sectionStatistics);
         }
     }

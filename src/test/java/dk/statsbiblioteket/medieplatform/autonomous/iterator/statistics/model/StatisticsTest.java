@@ -11,21 +11,25 @@ public class StatisticsTest {
         assertEquals(rootStatistics.substatisticsMap.size(), 0);
 
         Statistics firstSubstatistics = new Statistics();
-        firstSubstatistics.addCount(new StatisticsKey("Books"), 1L);
-        firstSubstatistics.addCount(new StatisticsKey("Travel"), 1L);
-        rootStatistics.addSubstatistic(new StatisticsKey("Sections"), firstSubstatistics);
+        StatisticsKey sectionsKey = new StatisticsKey("Sections");
+        StatisticsKey booksKey = new StatisticsKey("Books");
+        StatisticsKey travelKey = new StatisticsKey("Travel");
+        firstSubstatistics.addCount(booksKey, 1L);
+        firstSubstatistics.addCount(travelKey, 1L);
+        rootStatistics.addSubstatistic(sectionsKey, firstSubstatistics);
         assertEquals(rootStatistics.substatisticsMap.size(), 1);
-        assertEquals(rootStatistics.substatisticsMap.get(new StatisticsKey("Sections")).countMap.size(), 2);
-        assertEquals(rootStatistics.substatisticsMap.get(new StatisticsKey("Sections")).countMap.get(new StatisticsKey("Books")), new Long(1));
+        assertEquals(rootStatistics.substatisticsMap.get(sectionsKey).countMap.size(), 2);
+        assertEquals(rootStatistics.substatisticsMap.get(sectionsKey).countMap.get(booksKey), new Long(1));
 
         Statistics secondSubstatistics = new Statistics();
-        secondSubstatistics.addCount(new StatisticsKey("Books"), 1L);
-        secondSubstatistics.addCount(new StatisticsKey("Cats"), 1L);
-        rootStatistics.addSubstatistic(new StatisticsKey("Sections"), secondSubstatistics);
+        StatisticsKey catsKey = new StatisticsKey("Cats");
+        secondSubstatistics.addCount(booksKey, 1L);
+        secondSubstatistics.addCount(catsKey, 1L);
+        rootStatistics.addSubstatistic(sectionsKey, secondSubstatistics);
         assertEquals(rootStatistics.substatisticsMap.size(), 1);
-        assertEquals(rootStatistics.substatisticsMap.get(new StatisticsKey("Sections")).countMap.size(), 3);
-        assertEquals(rootStatistics.substatisticsMap.get(new StatisticsKey("Sections")).countMap.get(new StatisticsKey("Books")), new Long(2));
-        assertEquals(rootStatistics.substatisticsMap.get(new StatisticsKey("Sections")).countMap.get(new StatisticsKey("Travel")), new Long(1));
-        assertEquals(rootStatistics.substatisticsMap.get(new StatisticsKey("Sections")).countMap.get(new StatisticsKey("Cats")), new Long(1));
+        assertEquals(rootStatistics.substatisticsMap.get(sectionsKey).countMap.size(), 3);
+        assertEquals(rootStatistics.substatisticsMap.get(sectionsKey).countMap.get(booksKey), new Long(2));
+        assertEquals(rootStatistics.substatisticsMap.get(sectionsKey).countMap.get(travelKey), new Long(1));
+        assertEquals(rootStatistics.substatisticsMap.get(sectionsKey).countMap.get(catsKey), new Long(1));
     }
 }

@@ -11,6 +11,7 @@ import dk.statsbiblioteket.medieplatform.newspaper.statistics.FilmStatistics;
  * Handles the collection of film level statistics.
  */
 public class FilmCollector extends StatisticCollector {
+    public static final String DATE_STAT_KEY = "Date";
     public static final String SECTIONS_STAT = "Sections";
     public static final String EDITION_DATE_STAT = "Edition-dates";
     private final FilmStatistics statistics = new FilmStatistics();
@@ -23,7 +24,7 @@ public class FilmCollector extends StatisticCollector {
         } else if (eventName.equals("FILM-ISO-target")) {
             return new SinkCollector();
         } else {
-            editionDates.addCount(new StatisticsKey("Date",
+            editionDates.addCount(new StatisticsKey(DATE_STAT_KEY,
                     getSimpleName(eventName).substring(0, eventName.lastIndexOf('-'))),
                     1L);
             return new EditionCollector();
