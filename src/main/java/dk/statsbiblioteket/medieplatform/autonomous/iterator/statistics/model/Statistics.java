@@ -1,5 +1,6 @@
 package dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -9,9 +10,9 @@ import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer.S
  * Models the collected statistics for this collector.
  */
 public class Statistics {
-    protected final Map<StatisticsKey, Long> countMap = new TreeMap();
-    protected final Map<StatisticsKey, WeightedMean> relativeCountMap = new TreeMap();
-    protected final Map<StatisticsKey, Statistics> substatisticsMap = new TreeMap();
+    protected final Map<StatisticsKey, Long> countMap = new HashMap();
+    protected final Map<StatisticsKey, WeightedMean> relativeCountMap = new HashMap();
+    protected final TreeMap<StatisticsKey, Statistics> substatisticsMap = new TreeMap();
 
     /**
      * Adds a measurement to the current.
@@ -76,23 +77,30 @@ public class Statistics {
     }
 
     /**
-     * Adds one statistics object to this statistics as a sub statistics.
+     * Adds one statistics object to this statistics as a sub statistics. The keys are added in the operation.
      * @param statisticsToAdd The statistics to add to this collector
      */
     public void addSubstatistic(StatisticsKey key, Statistics statisticsToAdd) {
         if (substatisticsMap.containsKey(key)) {
-            substatisticsMap.get(key).addStatistic(statisticsToAdd);
+            Map.Entry<StatisticsKey, Statistics> entry = substatisticsMap.ceilingEntry(key);
+            entry.getKey().add(key);
+            entry.getValue().addStatistic(statisticsToAdd);
         } else {
             substatisticsMap.put(key, statisticsToAdd);
         }
     }
 
+    /**
+     * Writes the statistics for the diffenrent measurement types. The measurements are sorted according to
+     * keys prior to writing.
+     * @param writer
+     */
     public void writeStatistics(StatisticWriter writer) {
-        for (Map.Entry<StatisticsKey, Long> measurement : countMap.entrySet()) {
+        for (Map.Entry<StatisticsKey, Long> measurement : new TreeMap<>(countMap).entrySet()) {
             writer.addStatistic(measurement.getKey(), measurement.getValue());
         }
 
-        for (Map.Entry<StatisticsKey, WeightedMean> measurement : relativeCountMap.entrySet()) {
+        for (Map.Entry<StatisticsKey, WeightedMean> measurement : new TreeMap<>(relativeCountMap).entrySet()) {
             writer.addStatistic(measurement.getKey(), measurement.getValue());
         }
 

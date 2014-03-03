@@ -31,6 +31,11 @@ public class StatisticsKey implements Comparable<StatisticsKey> {
         return name != null;
     }
 
+    /**
+     * May be overriden by subclasses to provide a specific way to add keys to this key.
+     */
+    public void add(StatisticsKey keyToAdd) {}
+
     @Override
     public int compareTo(StatisticsKey sk) {
         if (isNameDefined()) {

@@ -2,6 +2,7 @@ package dk.statsbiblioteket.medieplatform.newspaper.statistics.collector;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.TreeSet;
 
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.AttributeParsingEvent;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.SinkCollector;
@@ -63,7 +64,7 @@ public class PageCollector extends StatisticCollector {
         String section = readSection(event);
         if (section != null && !section.isEmpty()) {
             Statistics sectionStatistics = new Statistics();
-            sectionStatistics.addCount(new StatisticsKey(SECTION_STAT_KEY, section), 1L);
+            sectionStatistics.addCount(new SectionStatisticsKey(SECTION_STAT_KEY, section, getPageFromModsEvent(event)), 1L);
             getStatistics().addSubstatistic(new StatisticsKey(PAGES_IN_SECTIONS_STAT), sectionStatistics);
         }
     }
@@ -101,5 +102,48 @@ public class PageCollector extends StatisticCollector {
         final String accuracyXPath="alto:alto/alto:Layout/alto:Page/@ACCURACY";
         String accuracyString = ALTO_XPATH.selectString(doc, accuracyXPath);
         return Double.parseDouble(accuracyString);
+    }
+
+    private String getPageFromModsEvent(AttributeParsingEvent event) {
+        String[] eventParts1 = event.getName().split("-");
+        String[] eventParts2 = eventParts1[eventParts1.length-1].split("\\.");
+        return eventParts2[0];
+    }
+
+    public static class SectionStatisticsKey extends StatisticsKey {
+        private TreeSet<String> pages = new TreeSet();
+
+        public SectionStatisticsKey(String type, String name, String page) {
+            super(type, name);
+            pages.add(page);
+        }
+
+        public String getFirstPage() {
+            return pages.first();
+        }
+
+        @Override
+        public void add(StatisticsKey key) {
+            if (key instanceof SectionStatisticsKey) {
+                pages.addAll(((SectionStatisticsKey)key).pages);
+            }
+        }
+
+        @Override
+        public int compareTo(StatisticsKey sk) {
+            if (sk instanceof SectionStatisticsKey) {
+                SectionStatisticsKey other = (SectionStatisticsKey)sk;
+                return getFirstPage().compareTo(other.getFirstPage());
+            } else {
+                return super.compareTo(sk);
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "SectionStatisticsKey{" +
+                    "pages=" + pages +
+                    "} " + super.toString();
+        }
     }
 }
