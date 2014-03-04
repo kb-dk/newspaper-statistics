@@ -2,7 +2,6 @@ package dk.statsbiblioteket.medieplatform.newspaper.statistics.collector;
 
 import java.io.IOException;
 import java.util.Properties;
-import java.util.TreeSet;
 
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.AttributeParsingEvent;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.SinkCollector;
@@ -110,40 +109,4 @@ public class PageCollector extends StatisticCollector {
         return eventParts2[0];
     }
 
-    public static class SectionStatisticsKey extends StatisticsKey {
-        private TreeSet<String> pages = new TreeSet();
-
-        public SectionStatisticsKey(String type, String name, String page) {
-            super(type, name);
-            pages.add(page);
-        }
-
-        public String getFirstPage() {
-            return pages.first();
-        }
-
-        @Override
-        public void add(StatisticsKey key) {
-            if (key instanceof SectionStatisticsKey) {
-                pages.addAll(((SectionStatisticsKey)key).pages);
-            }
-        }
-
-        @Override
-        public int compareTo(StatisticsKey sk) {
-            if (sk instanceof SectionStatisticsKey) {
-                SectionStatisticsKey other = (SectionStatisticsKey)sk;
-                return getFirstPage().compareTo(other.getFirstPage());
-            } else {
-                return super.compareTo(sk);
-            }
-        }
-
-        @Override
-        public String toString() {
-            return "SectionStatisticsKey{" +
-                    "pages=" + pages +
-                    "} " + super.toString();
-        }
-    }
 }

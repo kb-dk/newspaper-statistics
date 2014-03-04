@@ -10,8 +10,11 @@ import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer.S
  * Models the collected statistics for this collector.
  */
 public class Statistics {
+    /** Maintains the count statistics. See addCount(StatisticsKey, Long) for details. */
     protected final Map<StatisticsKey, Long> countMap = new HashMap();
+    /** Maintains the weightedmean statistics, see addRelative(StatisticsKey, WeightedMean) for details.*/
     protected final Map<StatisticsKey, WeightedMean> relativeCountMap = new HashMap();
+    /** Maintains the substatistics statistics, see addStatistic(Statistics ) for details.*/
     protected final TreeMap<StatisticsKey, Statistics> substatisticsMap = new TreeMap();
 
     /**

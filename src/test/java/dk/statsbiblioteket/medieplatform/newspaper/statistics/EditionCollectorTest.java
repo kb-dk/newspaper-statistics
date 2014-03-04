@@ -18,7 +18,7 @@ import dk.statsbiblioteket.medieplatform.newspaper.statistics.collector.PageColl
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static dk.statsbiblioteket.medieplatform.newspaper.statistics.collector.PageCollector.SectionStatisticsKey;
+import dk.statsbiblioteket.medieplatform.newspaper.statistics.collector.SectionStatisticsKey;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.testng.AssertJUnit.assertEquals;
