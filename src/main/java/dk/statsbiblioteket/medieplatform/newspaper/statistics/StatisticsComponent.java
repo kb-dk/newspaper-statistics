@@ -2,9 +2,10 @@ package dk.statsbiblioteket.medieplatform.newspaper.statistics;
 
 import java.util.Properties;
 
-import dk.statsbiblioteket.medieplatform.autonomous.AutonomousComponentUtils;
 import dk.statsbiblioteket.medieplatform.autonomous.CallResult;
 import dk.statsbiblioteket.medieplatform.autonomous.RunnableComponent;
+import dk.statsbiblioteket.medieplatform.autonomous.SBOIDomsAutonomousComponentUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +25,12 @@ public class StatisticsComponent {
         log.info("Starting with args {}", args);
 
         //Parse the args to a properties construct
-        Properties properties = AutonomousComponentUtils.parseArgs(args);
+        Properties properties = SBOIDomsAutonomousComponentUtils.parseArgs(args);
 
         //make a new runnable component from the properties
         RunnableComponent component = new StatisticsRunnableComponent(properties);
 
-        CallResult result = AutonomousComponentUtils.startAutonomousComponent(properties, component);
+        CallResult result = SBOIDomsAutonomousComponentUtils.startAutonomousComponent(properties, component);
         log.info(result.toString());
         System.exit(result.containsFailures());
     }
