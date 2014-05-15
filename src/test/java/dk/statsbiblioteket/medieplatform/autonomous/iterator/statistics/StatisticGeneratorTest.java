@@ -1,13 +1,18 @@
 package dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
 import dk.statsbiblioteket.medieplatform.autonomous.Batch;
+import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.AttributeParsingEvent;
+import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.InMemoryAttributeParsingEvent;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.NodeBeginsParsingEvent;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.common.NodeEndParsingEvent;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer.XmlFileTest;
 import dk.statsbiblioteket.medieplatform.newspaper.statistics.StatisticGenerator;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -43,13 +48,16 @@ public class StatisticGeneratorTest extends XmlFileTest {
     public void pageNodeCountTest() {
         statisticGenerator.handleNodeBegin(new NodeBeginsParsingEvent(DEFAULT_BATCH));
         String FILM1= DEFAULT_BATCH + "/film1";
+        String FILM1_ATTRIBUTE = FILM1 + "/foobarpaper-4099-01.film.xml";
         String EDITION1_1 = FILM1 + "/2012-11-11-1";
         String PAGE1_1 = EDITION1_1 + "/page1";
         String PAGE1_2 = EDITION1_1 + "/page2";
         String FILM2= DEFAULT_BATCH + "/film2";
+        String FILM2_ATTRIBUTE = FILM2 + "/foobarpaper-4099-02.film.xml";
         String EDITION2_1 = FILM1 + "/2012-11-13-1";
         String PAGE2_1 = EDITION2_1 + "/page3";
         statisticGenerator.handleNodeBegin(new NodeBeginsParsingEvent(FILM1));
+        statisticGenerator.handleAttribute(new InMemoryAttributeParsingEvent(FILM1_ATTRIBUTE, null, null));
         statisticGenerator.handleNodeBegin(new NodeBeginsParsingEvent(EDITION1_1));
         statisticGenerator.handleNodeBegin(new NodeBeginsParsingEvent(PAGE1_1));
         statisticGenerator.handleNodeEnd(new NodeEndParsingEvent(PAGE1_1));
@@ -59,6 +67,7 @@ public class StatisticGeneratorTest extends XmlFileTest {
         statisticGenerator.handleNodeEnd(new NodeEndParsingEvent(FILM1));
 
         statisticGenerator.handleNodeBegin(new NodeBeginsParsingEvent(FILM2));
+        statisticGenerator.handleAttribute(new InMemoryAttributeParsingEvent(FILM2_ATTRIBUTE, null, null));
         statisticGenerator.handleNodeBegin(new NodeBeginsParsingEvent(EDITION2_1));
         statisticGenerator.handleNodeBegin(new NodeBeginsParsingEvent(PAGE2_1));
         statisticGenerator.handleNodeEnd(new NodeEndParsingEvent(PAGE2_1));
@@ -78,6 +87,9 @@ public class StatisticGeneratorTest extends XmlFileTest {
                 "      <Briks>0</Briks>\n" +
                 "      <Editions>1</Editions>\n" +
                 "      <Pages>2</Pages>\n" +
+                "      <AvisIDs>\n" +
+                "        <AvisID name=\"foobarpaper\">1</AvisID>\n" + 
+                "      </AvisIDs>\n" +
                 "      <Edition-dates>\n" +
                 "        <Date name=\"2012-11-11\">1</Date>\n" +
                 "      </Edition-dates>\n" +
@@ -91,6 +103,9 @@ public class StatisticGeneratorTest extends XmlFileTest {
                 "      <Briks>0</Briks>\n" +
                 "      <Editions>1</Editions>\n" +
                 "      <Pages>1</Pages>\n" +
+                "      <AvisIDs>\n" +
+                "        <AvisID name=\"foobarpaper\">1</AvisID>\n" + 
+                "      </AvisIDs>\n" +
                 "      <Edition-dates>\n" +
                 "        <Date name=\"2012-11-13\">1</Date>\n" +
                 "      </Edition-dates>\n" +
@@ -100,6 +115,9 @@ public class StatisticGeneratorTest extends XmlFileTest {
                 "    <Editions>2</Editions>\n" +
                 "    <Films>2</Films>\n" +
                 "    <Pages>3</Pages>\n" +
+                "    <AvisIDs>\n" +
+                "      <AvisID name=\"foobarpaper\">2</AvisID>\n" + 
+                "    </AvisIDs>\n" + 
                 "    <Edition-dates>\n" +
                 "      <Date name=\"2012-11-11\">1</Date>\n" +
                 "      <Date name=\"2012-11-13\">1</Date>\n" +
