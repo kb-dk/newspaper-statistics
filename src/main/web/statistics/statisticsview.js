@@ -17,6 +17,12 @@ function loadXmlStatistics() {
     $('#search_input').focus().keydown(function(e){
         $('#xmltree').unhighlight();
     });
+
+    $.get(filepath, function(xml) {
+        avisID = xml.evaluate("/Batch/AvisIDs/AvisID/@name", xml, null, XPathResult.STRING_TYPE, null).stringValue;
+        $("#statistics-headline").append(" " + avisID);
+    });
+
 }
 
 function filterTree(filter) {
