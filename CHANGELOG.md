@@ -1,3 +1,8 @@
+1.3
+* Updated to version 1.7 of batch event framework
+* Fixed naming of configuration dir in distribution
+* Added avisID to statistics, and displayed statistics page
+
 1.2
 * Updated to version 1.6 of batch event framework
 * Updated to version 1.2 of newspaper parent pom
