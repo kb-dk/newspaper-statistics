@@ -33,8 +33,8 @@ public class StatisticsRunnableComponent extends TreeProcessorAbstractRunnableCo
         log.info("Starting statistics generation for '{}'", batch.getFullID());
         List<TreeEventHandler> statisticGenerator = Arrays.asList(new TreeEventHandler[]
                 { new StatisticGenerator(batch, properties) });
-        EventRunner eventRunner = new EventRunner(createIterator(batch));
-        eventRunner.runEvents(statisticGenerator, resultCollector);
+        EventRunner eventRunner = new EventRunner(createIterator(batch), statisticGenerator, resultCollector);
+        eventRunner.run();
         log.info("Done generating statistics '{}', success: {}", batch.getFullID(), resultCollector.isSuccess());
     }
 }
