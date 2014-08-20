@@ -62,14 +62,14 @@ public class StatisticsComponentIT {
 
     private void processBatch(String batchFolder)  throws Exception  {
         TreeIterator iterator = getIterator(batchFolder);
-        EventRunner runner = new EventRunner(iterator);
         Batch batch = new Batch();
-
         batch.setBatchID(TEST_BATCH_ID);
         batch.setRoundTripNumber(1);
+        EventRunner runner = new EventRunner(iterator, Arrays.asList(new TreeEventHandler[]
+                        {new StatisticGenerator(batch, properties)}), new ResultCollector(getClass().getSimpleName(), "1", 10));
 
-        runner.runEvents( Arrays.asList(new TreeEventHandler[]
-                {new StatisticGenerator(batch, properties)}), new ResultCollector(getClass().getSimpleName(), "1", 10));
+
+        runner.run( );
     }
 
     /**
