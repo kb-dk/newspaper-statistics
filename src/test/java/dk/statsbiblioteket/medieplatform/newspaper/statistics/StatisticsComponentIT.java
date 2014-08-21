@@ -17,6 +17,12 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Properties;
+
 public class StatisticsComponentIT {
     private final static String TEST_BATCH_ID = "400022028241";
     private File genericPropertyFile;
@@ -65,11 +71,11 @@ public class StatisticsComponentIT {
         Batch batch = new Batch();
         batch.setBatchID(TEST_BATCH_ID);
         batch.setRoundTripNumber(1);
-        EventRunner runner = new EventRunner(iterator, Arrays.asList(new TreeEventHandler[]
-                        {new StatisticGenerator(batch, properties)}), new ResultCollector(getClass().getSimpleName(), "1", 10));
+        EventRunner runner = new EventRunner(iterator,
+                Arrays.asList(new TreeEventHandler[]{new StatisticGenerator(batch, properties)}),
+                new ResultCollector(getClass().getSimpleName(), "1", 10));
 
-
-        runner.run( );
+        runner.run();
     }
 
     /**

@@ -1,17 +1,17 @@
 package dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.model.StatisticsKey;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 /**
  * Writes statistics to a xml fil as the different statistics are generated minimising the
@@ -23,8 +23,8 @@ public class XmlFileIncrementalWriter implements StatisticWriter {
 
     public XmlFileIncrementalWriter(String outputFilePath) {
         log.info("Preparing to write statistics to " + outputFilePath);
+        File outputFile = new File(outputFilePath);
         try {
-            File outputFile = new File(outputFilePath);
             FileUtils.forceMkdir(outputFile.getParentFile());
             OutputStream outputStream = new FileOutputStream(new File(outputFilePath));
 
@@ -33,7 +33,7 @@ public class XmlFileIncrementalWriter implements StatisticWriter {
             out.writeStartDocument();
             out.writeStartElement("Statistics");
         } catch (Exception e) {
-            throw new RuntimeException("Failed to initialize xml writer for statistics.", e);
+            throw new RuntimeException("Failed to initialize xml writer for statistics for file "+outputFile.getAbsolutePath(), e);
         }
     }
 

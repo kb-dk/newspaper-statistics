@@ -1,17 +1,16 @@
 package dk.statsbiblioteket.medieplatform.newspaper.statistics;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
-
 import dk.statsbiblioteket.medieplatform.autonomous.Batch;
 import dk.statsbiblioteket.medieplatform.autonomous.ResultCollector;
 import dk.statsbiblioteket.medieplatform.autonomous.TreeProcessorAbstractRunnableComponent;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.eventhandlers.EventRunner;
 import dk.statsbiblioteket.medieplatform.autonomous.iterator.eventhandlers.TreeEventHandler;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 
 public class StatisticsRunnableComponent extends TreeProcessorAbstractRunnableComponent {
 

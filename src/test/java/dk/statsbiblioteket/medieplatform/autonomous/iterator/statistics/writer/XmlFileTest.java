@@ -1,18 +1,18 @@
 package dk.statsbiblioteket.medieplatform.autonomous.iterator.statistics.writer;
 
+import org.apache.commons.io.FileUtils;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.testng.annotations.BeforeClass;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
-import org.custommonkey.xmlunit.XMLUnit;
-import org.testng.annotations.BeforeClass;
-
 import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 
 public class XmlFileTest {
-    protected final String OUTPUTFILE_DIR = "target/statistics/" + getClass().getSimpleName() + "/";
+    protected final String OUTPUTFILE_DIR = "target/" + getClass().getSimpleName() + "/";
     protected String outputFileLocation;
 
     @BeforeClass
