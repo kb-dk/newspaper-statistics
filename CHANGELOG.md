@@ -1,3 +1,6 @@
+1.4
+* Updated to version 1.10 of batch event framework
+
 1.3
 * Updated to version 1.7 of batch event framework
 * Fixed naming of configuration dir in distribution
