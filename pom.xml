@@ -9,14 +9,14 @@
   </parent>
 
   <artifactId>newspaper-statistics</artifactId>
-  <version>1.4-SNAPSHOT</version>
+  <version>1.4</version>
 
   <scm>
     <url>https://github.com/statsbiblioteket/newspaper-statistics</url>
     <connection>scm:git:https://github.com/statsbiblioteket/newspaper-statistics.git</connection>
     <developerConnection>scm:git:git@github.com:statsbiblioteket/newspaper-statistics.git
     </developerConnection>
-    <tag>HEAD</tag>
+    <tag>newspaper-statistics-1.4</tag>
   </scm>
 
   <build>
