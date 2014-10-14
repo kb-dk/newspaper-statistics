@@ -44,7 +44,7 @@ public class XmlFileTest {
         return sb.toString();
     }
 
-    protected XmlFileIncrementalWriter createWriter(String name) {
+    protected synchronized XmlFileIncrementalWriter createWriter(String name) {
         outputFileLocation = OUTPUTFILE_DIR + name + ".xml";
         return new XmlFileIncrementalWriter(outputFileLocation);
     }
