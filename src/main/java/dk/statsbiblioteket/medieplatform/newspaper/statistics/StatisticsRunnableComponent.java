@@ -28,7 +28,7 @@ public class StatisticsRunnableComponent extends TreeProcessorAbstractRunnableCo
     }
 
     @Override
-    public void doWorkOnBatch(Batch batch, ResultCollector resultCollector) throws Exception {
+    public void doWorkOnItem(Batch batch, ResultCollector resultCollector) throws Exception {
         log.info("Starting statistics generation for '{}'", batch.getFullID());
         List<TreeEventHandler> statisticGenerator = Arrays.asList(new TreeEventHandler[]
                 { new StatisticGenerator(batch, properties) });
