@@ -47,7 +47,12 @@
       <groupId>dk.statsbiblioteket.newspaper</groupId>
       <artifactId>tree-processor-runnable-component</artifactId>
       <version>1.12-SNAPSHOT</version>
-    </dependency>    
+    </dependency>
+      <dependency>
+          <groupId>dk.statsbiblioteket.newspaper</groupId>
+          <artifactId>newspaper-autonomous-component</artifactId>
+          <version>1.12-SNAPSHOT</version>
+      </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
