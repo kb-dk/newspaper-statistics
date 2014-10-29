@@ -17,12 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Properties;
-
 public class StatisticsComponentIT {
     private final static String TEST_BATCH_ID = "400022028241";
     private File genericPropertyFile;
@@ -86,7 +80,8 @@ public class StatisticsComponentIT {
      */
     public TreeIterator getIterator(String batchFolder) throws URISyntaxException {
         File file = getBatchFolder(batchFolder);
-        return new TransformingIteratorForFileSystems(file, "\\.", ".*\\.jp2$", ".md5");
+        return new TransformingIteratorForFileSystems(file, "\\.", ".*\\.jp2$", ".md5",
+                                                      Arrays.asList("transfer_complete", "transfer_acknowledged"));
     }
 
     private File getBatchFolder(String batch) {
