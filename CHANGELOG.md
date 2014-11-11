@@ -1,3 +1,6 @@
+1.5
+* Use newest version of item event framework. No functional changes for this module.
+
 1.4
 * Updated to version 1.10 of batch event framework
 
