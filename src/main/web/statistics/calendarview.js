@@ -15,7 +15,8 @@ function loadDateStatistics() {
             $(this).find('Edition-dates').each(function() {
                 $(this).children().each(function() {
                     date = $(this).attr("name");
-                    if (date.match(/-/g).length === 2) {
+                    var dashes = date.match(/-/g);
+                    if (dashes != null && dashes.length === 2) {
                         films[filmname].push(date);
                         if (date < startdate || startdate == undefined) startdate = date;
                         if (date > lastdate || lastdate == undefined) lastdate = date;
