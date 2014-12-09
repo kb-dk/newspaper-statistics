@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>newspaper-statistics</artifactId>
-  <version>1.4</version>
+  <version>1.4.1-SNAPHOT</version>
 
   <scm>
     <url>https://github.com/statsbiblioteket/newspaper-statistics</url>
