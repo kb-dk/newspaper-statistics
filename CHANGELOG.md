@@ -1,3 +1,6 @@
+1.4.1
+* Fix bug: Calendar does not show when there are no dashes in partial date
+
 1.4
 * Updated to version 1.10 of batch event framework
 
