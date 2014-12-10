@@ -1,3 +1,6 @@
+1.4.2
+* Fix bug: A very wide list of partial dates will hide the calendar
+
 1.4.1
 * Fix bug: Calendar does not show when there are no dashes in partial date
 
