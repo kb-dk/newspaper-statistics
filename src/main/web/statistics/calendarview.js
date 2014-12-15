@@ -1,3 +1,5 @@
+// TODO document/comment functions and code
+
 var batchid = location.search.split('batchid=')[1];
 var datefilepath = "data/" + batchid + '/date-statistics.xml';
 
@@ -26,6 +28,7 @@ function loadDateStatistics() {
                 });
             });
         });
+
         minDate = new Date (startdate);
         maxDate = new Date (lastdate);
         initDateRange(minDate, maxDate);
@@ -39,7 +42,6 @@ function initCalendar(films, minDate,  maxDate) {
         numberOfMonths: [3,2],
         changeMonth: true,
         changeYear: true,
-        setDate: minDate,
         minDate: minDate,
         maxDate: maxDate,
         dateFormat: 'yy-mm-dd', onSelect: function() {
@@ -61,6 +63,7 @@ function initCalendar(films, minDate,  maxDate) {
             return r;
         }
     });
+    $("#calendar-container").datepicker("setDate", minDate);
 }
 
 function initPartialDates(parameters) {
