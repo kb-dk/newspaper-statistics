@@ -44,6 +44,7 @@ function initCalendar(films, minDate,  maxDate) {
         changeYear: true,
         minDate: minDate,
         maxDate: maxDate,
+        stepMonths: 6,
         dateFormat: 'yy-mm-dd', onSelect: function() {
             date = $(this).datepicker('getDate');
             filterTree(formatDate(date));
