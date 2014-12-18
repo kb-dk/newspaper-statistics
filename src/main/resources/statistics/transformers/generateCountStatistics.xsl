@@ -32,6 +32,16 @@
           </xsl:copy>
       </xsl:template>
 
+    <xsl:template match="Sections">
+        <xsl:copy>
+            <xsl:apply-templates select="@*"/>
+            <xsl:apply-templates select="Section">
+                <xsl:sort select="@name"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="*[name() != 'Section']"/>
+        </xsl:copy>
+    </xsl:template>
+
     <xsl:template match="Edition-dates"/>
 
 </xsl:stylesheet>
