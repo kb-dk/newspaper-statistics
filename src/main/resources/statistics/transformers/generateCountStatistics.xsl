@@ -36,7 +36,7 @@
         <xsl:copy>
             <xsl:apply-templates select="@*"/>
             <xsl:apply-templates select="Section">
-                <xsl:sort select="@name"/>
+                <xsl:sort select="@name" lang="da" data-type="text" case-order="upper-first"/>
             </xsl:apply-templates>
             <xsl:apply-templates select="*[name() != 'Section']"/>
         </xsl:copy>
