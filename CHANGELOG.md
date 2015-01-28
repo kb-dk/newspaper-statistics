@@ -1,3 +1,11 @@
+1.6 
+* Updated to version 2.3 of batch event framework
+* Fix partial-date-with-no-dashes bug
+* Make calendar open at the first month
+* Make calendar jump 6 months at a time
+* Order section lables by name
+* Update bundled logback.xml to the agreed format
+
 1.5
 * Use newest version of item event framework. No functional changes for this module.
 * Configuration has been extended and changed and example config has been updated. Please update your configuration files.
