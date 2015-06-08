@@ -34,23 +34,23 @@ public class StatisticsComponentIT {
     }
 
     /**
-     * Test that a reasonable batch can be run against the flagger component without generating any
-     * errors or flags when the batch and configuration agree on the setup..
+     * Test that a reasonable batch can be run against the statistics component.
      * @throws Exception
      */
     @Test(groups = "testDataTest")
     public void testSmallBatch() throws Exception {
         processBatch("small-test-batch");
+        //TODO Check something
     }
 
     /**
-     * Test that a the default batch with a configuration inconsistent with the metadata in the batch. This should
-     * generate a lot of flags.
+     * Test that a reasonable batch can be run against the bad batch.
      * @throws Exception
      */
     @Test(groups = "testDataTest")
     public void testBadBatch() throws Exception {
         processBatch("bad-bad-batch");
+        //TODO Check something
     }
 
     private void loadSpecificProperties(String path) throws Exception {
